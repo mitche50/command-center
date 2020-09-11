@@ -12,7 +12,6 @@ $radio-button-size: 16px;
 $radio-button-border-color: $primary;
 $radio-button-background-color: trasparent;
 $radio-button-check-color: $primary;
-$label-font-color: $mid-grey;
 
 input[type="radio"] {
   @include ease-out;
@@ -57,7 +56,10 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   label {
-    color: $label-font-color;
+    cursor: pointer;
+    color: white;
+    opacity: 0.8;
+    margin-right: 20px;
     input[type="radio"]{
       margin-top: -3px;
     }
