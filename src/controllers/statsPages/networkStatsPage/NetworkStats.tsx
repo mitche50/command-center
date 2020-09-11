@@ -1,6 +1,6 @@
 import { CurrencyIcon, Loading } from "@renproject/react-components";
 import BigNumber from "bignumber.js";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { PeriodType, QuotePeriodResponse } from "../../../lib/graphQL/volumes";
 import { ReactComponent as IconValueLocked } from "../../../styles/images/icon-value-locked.svg";
@@ -8,7 +8,7 @@ import { ReactComponent as IconVolume } from "../../../styles/images/icon-volume
 import { Change } from "../../../views/Change";
 import { Stat, Stats } from "../../../views/Stat";
 import { Collateral } from "./Collateral";
-import { GraphType, HistoryChart } from "./HistoryChart";
+import { GraphType, HistoryChart, VolumeType } from "./HistoryChart";
 import { NetworkStatsContainer } from "./networkStatsContainer";
 import { PeriodSelector } from "./PeriodSelector";
 import { StatTab, StatTabs } from "./StatTabs";
@@ -56,6 +56,17 @@ export const NetworkStats = () => {
   } = NetworkStatsContainer.useContainer();
   const quoteVolumePeriod = quotePeriodSeries.get(volumePeriod);
   const quoteLockedPeriod = quotePeriodSeries.get(lockedPeriod);
+  const [volumeType, setVolumeType] = useState<VolumeType>(
+    VolumeType.Cumulative
+  );
+  const setCumulativeVolume = useCallback(
+    () => setVolumeType(VolumeType.Cumulative),
+    []
+  );
+  const setRegularVolume = useCallback(
+    () => setVolumeType(VolumeType.Regular),
+    []
+  );
   const [totalVolumePercentChange, totalLockedPercentChange] = useMemo(() => {
     const volumeChange = getPeriodPercentChange(
       volumePeriod,
@@ -132,11 +143,31 @@ export const NetworkStats = () => {
                   assetsPeriod={volumePeriod}
                 />
                 {volumeTab === StatTab.History ? (
-                  <HistoryChart
-                    graphType={GraphType.TotalVolume}
-                    periodSeries={quoteVolumePeriod}
-                    quoteCurrency={quoteCurrency}
-                  />
+                  <>
+                    <div className="radio-group stat-volume-type--radio-group">
+                      <label>
+                        <input
+                          type="radio"
+                          checked={volumeType === VolumeType.Cumulative}
+                          onChange={setCumulativeVolume}
+                        />{" "}
+                        Cumulative Volume
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          checked={volumeType === VolumeType.Regular}
+                          onChange={setRegularVolume}
+                        />{" "}
+                        Regular Volume
+                      </label>
+                    </div>
+                    <HistoryChart
+                      graphType={GraphType.TotalVolume}
+                      periodSeries={quoteVolumePeriod}
+                      quoteCurrency={quoteCurrency}
+                    />
+                  </>
                 ) : (
                   <TokenChart
                     graphType="Volume"

@@ -1,0 +1,65 @@
+@mixin ease-out() {
+  transition: all 450ms ease-out 0ms;
+}
+
+label {
+  display: block;
+  margin: 4px 0;
+  user-select: none;
+}
+
+$radio-button-size: 16px;
+$radio-button-border-color: $primary;
+$radio-button-background-color: trasparent;
+$radio-button-check-color: $primary;
+$label-font-color: $mid-grey;
+
+input[type="radio"] {
+  @include ease-out;
+  -webkit-appearance: none;
+  background-color: $radio-button-background-color;
+  border: 2px solid $radio-button-border-color;
+  border-radius: 100%;
+  cursor: pointer;
+  display: inline-block;
+  height: $radio-button-size;
+  position: relative;
+  outline: none;
+  width: $radio-button-size;
+  vertical-align: text-bottom;
+
+  &:after {
+    @include ease-out;
+    background-color: $radio-button-background-color;
+    border-radius: 50%;
+    content: "";
+    height: $radio-button-size;
+    left: -2px;
+    position: absolute;
+    pointer-events: none;
+    top: -2px;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    overflow: hidden;
+    width: $radio-button-size;
+  }
+
+  &:checked:after {
+    @include ease-out;
+    background-color: $radio-button-check-color;
+    border-color: $radio-button-border-color;
+    transform: scale(0.5);
+  }
+}
+
+.radio-group {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  label {
+    color: $label-font-color;
+    input[type="radio"]{
+      margin-top: -3px;
+    }
+  }
+}

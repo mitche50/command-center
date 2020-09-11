@@ -37,6 +37,11 @@ export enum GraphType {
   TotalLocked = "TotalLocked",
 }
 
+export enum VolumeType {
+  Cumulative = "Cumulative",
+  Regular = "Regular",
+}
+
 const getOptions = (
   data: Array<[number, number]>,
   quoteCurrency: Currency,

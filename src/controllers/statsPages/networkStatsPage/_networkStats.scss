@@ -512,7 +512,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #1a2e46;
 }
 
@@ -562,6 +562,10 @@
 
 .stat-amount--value {
   margin-right: 10px;
+}
+
+.stat-volume-type--radio-group {
+  align-self: flex-start;
 }
 
 .collateral-padding {
